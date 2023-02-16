@@ -1,4 +1,4 @@
-
+//colocamos un parametro para que el usuario tenga la opcion de escribri o seleccionar una casilla 
 function Leer(i) {
     const juego = document.getElementById("input").value;
     //api freeGame
@@ -19,18 +19,15 @@ function buscar1(api_url){
       .then(data => {
         return data.json()
       }).then(resultado=>{
-            console.log(resultado);
-
-            const {Search=[]} = resultado;
+            console.log(resultado);             
             
-            console.log(Search);
-            document.getElementById("lista").innerHTML='';
-
-            Search.map((p)=>{
-                document.getElementById("lista").innerHTML+=`<div style="margin-top:10px;">
-                ${p.thumbnail}            </div>`;
-            })
-      });
+            resultado.map((p)=>{
+            document.getElementById("lista").innerHTML+=`<div style="margin-top:10px;">
+            <img width='100%' src=${p.thumbnail} alt="No hay thumbnail"></img></div>`;
+        })
+           
+             
+    });
 
 
 }
@@ -39,7 +36,7 @@ const buscar2=async(api_url)=>{
 
     const data= await fetch(api_url);
     const respuesta= await data.json();
-    const Search = await respuesta.Search;
+    const Search = await respuesta;
 
     console.log(Search);
 
@@ -48,7 +45,14 @@ const buscar2=async(api_url)=>{
         document.getElementById("lista").innerHTML='';
         Search.map((p)=>{
                 document.getElementById("lista").innerHTML+=`<div style="margin-top:10px;">
-                    <img width='100%' src=${p.thumbnail} alt="No hay thumbnail"></img></div>`;
+                <img width='100%' src=${p.thumbnail} alt="No hay thumbnail"></img>
+                <details>
+                    <summary>${p.title}</summary>
+                    <p>Plataforma:${p.platform} <br>
+                    Fecha De Lanzamiento:${p.release_date} <br>
+                    Pagina Oficial:${p.game_url}</p>
+                </details> 
+            </div>`;
         })
 
     }
